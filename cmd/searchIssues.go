@@ -15,17 +15,11 @@ import (
 
 // searchIssuesCmd represents the searchIssues command
 var searchIssuesCmd = &cobra.Command{
-	Use:   "search-issues",
+	Use:   "search-issues [file/to/search.json]",
 	Args:  cobra.ExactArgs(1),
 	Short: "Find issues matching regexes",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("searchIssues called")
+		fmt.Println("Searching for matches....")
 		regexes, err := cmd.Flags().GetStringToString("regex")
 		if err != nil {
 			panic(err)
@@ -61,6 +55,7 @@ to quickly create a Cobra application.`,
 				fmt.Printf("Element '%s' matched regex '%s' in object '%s'\n", res.MatchingElement, res.Name, res.Identifier)
 			}
 		}
+		fmt.Println("Search completed")
 	},
 }
 
@@ -72,7 +67,7 @@ func init() {
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
 	// searchIssuesCmd.PersistentFlags().String("foo", "", "A help for foo")
-	searchIssuesCmd.Flags().StringToStringP("regex", "r", make(map[string]string), "Provide regex with a name on the command line example --regex digits=\\d+")
+	searchIssuesCmd.Flags().StringToStringP("regex", "r", make(map[string]string), "Provide regex in addition to those in configfile on the command line example: --regex digits=\\d+")
 	searchIssuesCmd.Flags().StringP("file-to-search", "f", "", "Json file with list of elements")
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
