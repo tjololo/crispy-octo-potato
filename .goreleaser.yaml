@@ -10,6 +10,7 @@ builds:
       - arm64
     ldflags:
       - -X 'github.com/tjololo/crispy-octo-potato/cmd.versionString={{ .Version }}'
+      - -X 'github.com/tjololo/crispy-octo-potato/cmd.clientID={{ .Env.CLIENT_ID }}'
 archives:
   - format_overrides:
       - goos: windows

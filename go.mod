@@ -3,6 +3,7 @@ module github.com/tjololo/crispy-octo-potato
 go 1.21.1
 
 require (
+	github.com/cli/oauth v1.0.1
 	github.com/spf13/cobra v1.7.0
 	github.com/spf13/viper v1.16.0
 )
