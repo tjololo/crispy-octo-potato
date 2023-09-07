@@ -1,0 +1,5 @@
+regexes:
+  test: ".*?some string.*?"
+identifierPath: "html_url"
+matchPaths:
+  - "body"
