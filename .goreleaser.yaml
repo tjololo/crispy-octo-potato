@@ -1,0 +1,16 @@
+project_name: crispy-octo-potato
+builds:
+  - env: [CGO_ENABLED=0]
+    goos:
+      - linux
+      - windows
+      - darwin
+    goarch:
+      - amd64
+      - arm64
+    ldflags:
+      - -X 'github.com/tjololo/crispy-octo-potato/cmd.versionString={{ .Version }}'
+archives:
+  - format_overrides:
+      - goos: windows
+        format: zip
