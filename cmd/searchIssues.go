@@ -68,7 +68,6 @@ func init() {
 	// and all subcommands, e.g.:
 	// searchIssuesCmd.PersistentFlags().String("foo", "", "A help for foo")
 	searchIssuesCmd.Flags().StringToStringP("regex", "r", make(map[string]string), "Provide regex in addition to those in configfile on the command line example: --regex digits=\\d+")
-	searchIssuesCmd.Flags().StringP("file-to-search", "f", "", "Json file with list of elements")
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	// searchIssuesCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
