@@ -39,7 +39,11 @@ func matchPathInObject(name string, matchIdPath string, regex *regexp.Regexp, ma
 func getDataOnPath(pathArr []string, data map[string]interface{}) []byte {
 	k := pathArr[0]
 	if len(pathArr) == 1 {
-		return []byte(fmt.Sprint(data[k]))
+		if d := data[k]; d != nil {
+			return []byte(fmt.Sprint(d))
+		} else {
+			return []byte{}
+		}
 	}
 	return getDataOnPath(pathArr[1:], data[k].(map[string]interface{}))
 }

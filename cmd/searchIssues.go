@@ -21,7 +21,7 @@ var clientID = "set-at-build-time"
 var searchIssuesCmd = &cobra.Command{
 	Use:   "search-issues [org/repo]",
 	Args:  cobra.ExactArgs(1),
-	Short: "Find issues and pullrequests matching regexes in repo",
+	Short: "Find issues and pr matching regexes in repo, comments can be included in search",
 	Run: func(cmd *cobra.Command, args []string) {
 		regexes, err := cmd.Flags().GetStringToString("regex")
 		if err != nil {
@@ -41,7 +41,14 @@ var searchIssuesCmd = &cobra.Command{
 		if err != nil {
 			fmt.Printf("Failed to read flags, %v", err)
 		}
+		incComments, err := cmd.Flags().GetBool("comments")
+		if err != nil {
+			fmt.Printf("Failed to read flags, %v", err)
+		}
 		data := fetchGithubIssues(repo, state, auth.Token, 0)
+		if incComments {
+			data = append(data, fetchGithubComments(repo, auth.Token, 0)...)
+		}
 		fmt.Printf("Found %d issues in %s\n", len(data), repo)
 		searchData(regexes, data)
 		fmt.Println("Search completed")
@@ -58,6 +65,7 @@ func init() {
 	// searchIssuesCmd.PersistentFlags().String("foo", "", "A help for foo")
 	searchIssuesCmd.Flags().StringToStringP("regex", "r", make(map[string]string), "Provide regex in addition to those in configfile on the command line example: --regex digits=\\d+")
 	searchIssuesCmd.Flags().StringP("state", "s", "open", "Issue state to search for")
+	searchIssuesCmd.Flags().BoolP("comments", "c", false, "Include comments")
 	searchIssuesCmd.Flags().BoolP("private-repo", "p", false, "Adds repo scope to token to query private repo")
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
