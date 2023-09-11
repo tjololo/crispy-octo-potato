@@ -1,5 +1,7 @@
 regexes:
   test: ".*?some string.*?"
+  another: ".*? match some other string.+"
 identifierPath: "html_url"
 matchPaths:
   - "body"
+  - "title"
